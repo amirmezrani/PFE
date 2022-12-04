@@ -3,14 +3,14 @@ package tn.isimg.pfe.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "villes")
+@Table(name = "ville")
 public class Ville {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ville", nullable = false)
+    @Column(name = "ville", nullable = false,unique = true)
     private String ville;
 
     public Long getId() {

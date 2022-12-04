@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "patients")
+@Table(name = "patient")
 public class Patient{
 
     @Id
@@ -33,6 +33,17 @@ public class Patient{
 
     @Column(name = "genre", nullable = false)
     private String genre;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,mappedBy = "patient")
+    @JsonIgnore
+    Set<RendezVous> rendezVous=new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "comptepatient_id")
+    ComptePatient comptePatient;
 
 
     public String getGenre() {
@@ -89,6 +100,22 @@ public class Patient{
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public ComptePatient getComptePatient() {
+        return comptePatient;
+    }
+
+    public void setComptePatient(ComptePatient comptePatient) {
+        this.comptePatient = comptePatient;
     }
 
 

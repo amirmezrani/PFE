@@ -11,11 +11,11 @@ public class RendezVous {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = false, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "patient_id",nullable = false)
     Patient patient  ;
 
-    @OneToOne(fetch = FetchType.EAGER,optional = false, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "disponibilte",nullable = false)
     Disponibilite disponibilite  ;
 

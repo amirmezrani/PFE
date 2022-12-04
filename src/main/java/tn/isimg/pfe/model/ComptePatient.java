@@ -11,13 +11,7 @@ import java.util.Set;
 public class ComptePatient extends Utlisateur{
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
-
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL,mappedBy = "comptePatient")
     @JsonIgnore
     Set<Patient> membresFamille=new HashSet<>();
 
@@ -31,22 +25,6 @@ public class ComptePatient extends Utlisateur{
     // Getters and Setters
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Set<Patient> getMembresFamille() {
-        return membresFamille;
-    }
-
-    public void setMembresFamille(Set<Patient> membresFamille) {
-        this.membresFamille = membresFamille;
-    }
-
     public Patient getPatientPrincipal() {
         return patientPrincipal;
     }
@@ -54,5 +32,7 @@ public class ComptePatient extends Utlisateur{
     public void setPatientPrincipal(Patient patientPrincipal) {
         this.patientPrincipal = patientPrincipal;
     }
+
+
 }
 

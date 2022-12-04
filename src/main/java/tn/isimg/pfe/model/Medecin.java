@@ -7,12 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "medecins")
+@Table(name = "medecin")
 public class Medecin extends Utlisateur{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @Column(name = "nom", nullable = false)
     private String nom;
@@ -35,25 +33,21 @@ public class Medecin extends Utlisateur{
     @Column(name = "valider", nullable = true)
     private Boolean valider=false;
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = false, cascade=CascadeType.ALL)
+    @Column(name = "rejeter", nullable = true)
+    private Boolean rejeter=false;
+
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "ville_id",nullable = false)
     Ville ville ;
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = false, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "specialite_id",nullable = false)
     Specialite specialite ;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-    @JsonIgnore
-    Set<Disponibilite> disponibilites=new HashSet<>();
+//    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+//    @JsonIgnore
+//    Set<Disponibilite> disponibilites=new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNom() {
         return nom;
@@ -113,14 +107,6 @@ public class Medecin extends Utlisateur{
         this.specialite = specialite;
     }
 
-    public Set<Disponibilite> getDisponibilites() {
-        return disponibilites;
-    }
-
-    public void setDisponibilites(Set<Disponibilite> disponibilites) {
-        this.disponibilites = disponibilites;
-    }
-
     public Ville getVille() {
         return ville;
     }
@@ -135,5 +121,13 @@ public class Medecin extends Utlisateur{
 
     public void setValider(Boolean valider) {
         this.valider = valider;
+    }
+
+    public Boolean getRejeter() {
+        return rejeter;
+    }
+
+    public void setRejeter(Boolean rejeter) {
+        this.rejeter = rejeter;
     }
 }

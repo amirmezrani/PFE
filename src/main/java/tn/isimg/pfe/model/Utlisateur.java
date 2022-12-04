@@ -1,12 +1,16 @@
 package tn.isimg.pfe.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 
 @MappedSuperclass
 public abstract class Utlisateur implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "email", nullable = false,unique = true)
     private String email;
@@ -28,5 +32,13 @@ public abstract class Utlisateur implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

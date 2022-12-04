@@ -12,4 +12,9 @@ public interface DisponibiliteRepository extends JpaRepository<Disponibilite,Lon
    List<Disponibilite> findByMedecinIdAndDateTimeBetween(Long medecinId, LocalDateTime dateDebut, LocalDateTime dateFin);
 
    Optional<Disponibilite> findByDateTime(LocalDateTime dateTime);
+
+   List<Disponibilite> findByMedecinId(Long medecinId);
+
+   Optional<Disponibilite> findByMedecinIdAndDateTime(Long medecinId,LocalDateTime dateTime);
+
 }

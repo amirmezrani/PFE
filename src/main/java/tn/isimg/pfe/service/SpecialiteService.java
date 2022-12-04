@@ -27,7 +27,7 @@ public class SpecialiteService {
     }
 
     // Creation specialité
-    public Specialite creer(Specialite specialite){
+    public Specialite creerSpecialite(Specialite specialite){
         specialiteRepository.findByLibelle(specialite.getLibelle()).ifPresent(s -> {
             throw new RuntimeException("specialite id : " +specialite.getId()+" est deja existe");
         });
@@ -35,14 +35,10 @@ public class SpecialiteService {
     }
 
     // Update Specialité
-    public Specialite update(Long id, Specialite specialiteRequest){
-        specialiteRepository.findByLibelle(specialiteRequest.getLibelle()).ifPresent(md -> {
-            throw new RuntimeException("specialite id : " +specialiteRequest.getId()+" est deja existe");
-        });
+    public Specialite updateSpecialiteById(Long id, Specialite specialiteRequest){
         Specialite specialite=findSpecialiteById(id);
         specialite.setLibelle(specialiteRequest.getLibelle());
-        Specialite updateSpecialite=specialiteRepository.save(specialite);
-        return updateSpecialite;
+        return specialiteRepository.save(specialite);
     }
 
     // Delete Specialité

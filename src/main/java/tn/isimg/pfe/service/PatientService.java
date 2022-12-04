@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tn.isimg.pfe.exception.ResourceNotFoundException;
+import tn.isimg.pfe.model.ComptePatient;
 import tn.isimg.pfe.model.Patient;
 import tn.isimg.pfe.repository.ComptePatientRepository;
 import tn.isimg.pfe.repository.PatientRepository;
+
+import java.util.Set;
+
 @Service
 public class PatientService {
 
@@ -16,25 +20,36 @@ public class PatientService {
     @Autowired
     ComptePatientRepository comptePatientRepository ;
 
+    @Autowired
+    ComptePatientService comptePatientService;
+
     // Get  Patient By Id
-    public Patient getPatient(Long idPatient){
+    public Patient getPatientById(Long idPatient){
         return patientRepository.findById(idPatient).
                 orElseThrow(() -> new ResourceNotFoundException("id Patient " + idPatient + " not found"));
     }
 
+    public Set<Patient> getAllMembresFamilleByComptePatient(Long idComptePatient){
+
+        ComptePatient comptePatient=comptePatientService.getComptePatientById(idComptePatient);
+        return patientRepository.findByComptePatient(comptePatient);
+
+    }
+
     //Creer Patient By Id Compte Patient
-    public Patient creerMembre(Long idCompte,Patient patient ) {
-        return comptePatientRepository.findById(idCompte).map(comptePatient -> {
-            comptePatient.getMembresFamille().add(patient);
-            comptePatientRepository.save(comptePatient);
-            return patient;
-        }).orElseThrow(() -> new ResourceNotFoundException("Compte Patient " + idCompte + " not found"));
+    public Patient creerMembreFamille(Long idComptePatient, Patient patient ) {
+
+        ComptePatient comptePatient=comptePatientService.getComptePatientById(idComptePatient);
+        patient.setComptePatient(comptePatient);
+        return patientRepository.save(patient);
+
     }
 
 
-    public Patient update(Long idPatient, Patient patientRequest){
+    public Patient updatePatientById(Long idPatient, Patient patientRequest){
 
-        return patientRepository.findById(idPatient).map(patient -> {
+            Patient patient= getPatientById(idPatient);
+
             patient.setNom(patientRequest.getNom());
             patient.setPrenom(patientRequest.getPrenom());
             patient.setAdresse(patientRequest.getAdresse());
@@ -42,16 +57,11 @@ public class PatientService {
             patient.setGenre(patientRequest.getGenre());
             patient.setDateDeNaissance(patientRequest.getDateDeNaissance());
             return patientRepository.save(patient);
-        }).orElseThrow(() -> new ResourceNotFoundException("id Patient " + idPatient + "not found"));
-
     }
 
 
-    public ResponseEntity<?> delete(Long idPatient) {
-        return patientRepository.findById(idPatient).map(patient -> {
-            patientRepository.delete(patient);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("Patient not found with id " +
-                idPatient));
-    }
+    public ResponseEntity<?> deletePatientById(Long idPatient) {
+        Patient patient= getPatientById(idPatient);
+        patientRepository.delete(patient);
+        return ResponseEntity.ok().build(); }
 }

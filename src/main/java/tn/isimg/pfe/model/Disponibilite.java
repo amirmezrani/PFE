@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "disponibilites")
+@Table(name = "disponibilite")
 public class Disponibilite {
 
     @Id
@@ -16,13 +16,13 @@ public class Disponibilite {
     private Long id;
 
     @Column(name = "dateTime", nullable = false)
-    @JsonFormat(pattern = "yyyyMMdd'T'HH:mm")
+    @JsonFormat(pattern = "yyyy'-'MM'-'dd'T'HH:mm")
     private LocalDateTime dateTime;
 
     @Column(name = "rdv", nullable = true)
     private Boolean rdv=false;
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = false, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "medecin_id",nullable = false)
     Medecin medecin;
 

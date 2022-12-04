@@ -5,45 +5,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.isimg.pfe.model.Specialite;
 import tn.isimg.pfe.service.SpecialiteService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/api/specialites")
+@RequestMapping("/api")
 public class SpecialiteController {
 
     @Autowired
     SpecialiteService specialiteService;
 
     // fiind all Specialité
-    @GetMapping
+    @GetMapping("/specialites")
     public List<Specialite> findAllspecialite()
     {
         return specialiteService.findAll();
     }
 
     // fiind  Specialité By Id
-    @GetMapping("/{id}")
+    @GetMapping("/specialites/{id}")
     public Specialite findSpecialite(@PathVariable(value = "id") Long id){
         return specialiteService.findSpecialiteById(id);
     }
 
     // Creation specialité
-    @PostMapping
-    public Specialite creerSpecialite(@Valid @RequestBody Specialite specialite){
-        return specialiteService.creer(specialite);
+    @PostMapping("/specialites")
+    public Specialite creationSpecialite(@Valid @RequestBody Specialite specialite){
+        return specialiteService.creerSpecialite(specialite);
     }
 
     // Update Specialité
-    @PutMapping("/{id}")
-    public Specialite updateComptePatient(@PathVariable(value = "id") Long id,
+    @PutMapping("/administrateurs/specialites/{id}")
+    public Specialite updateSpecialite(@PathVariable(value = "id") Long id,
                                           @Valid @RequestBody Specialite specialite){
-        return specialiteService.update(id, specialite);
+        return specialiteService.updateSpecialiteById(id, specialite);
     }
 
     // Delete Specialité
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/administrateurs/specialites/{id}")
     public ResponseEntity<?> deleteSpecialite(@PathVariable(value = "id") Long id){
         return specialiteService.deleteSpecialiteById(id);
     }
